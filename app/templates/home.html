@@ -1,3 +1,17 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
-{% block content %}{% endblock %}
+{% import 'macros.html' as macro%}
+
+{% block content %}
+
+
+{% if blogs %}
+
+{{macro.displayBlogs(blogs)}}
+
+{% else %}
+
+<p>No blogs</p>
+
+{% endif %}
+
+{% endblock %}
