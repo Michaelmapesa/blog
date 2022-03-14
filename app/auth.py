@@ -1,17 +1,18 @@
-from flask import Blueprint, render_template,redirect,url_for
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 
-auth=Blueprint("auth", __name__)
+auth = Blueprint('auth', __name__)
 
-@auth.route("/login")
+@auth.route('/login')
 def login():
-    return render_template("login.html")
+    return render_template('login.html')
 
-@auth.route("/sign-up")
-def sign_up():
-    return render_template("signup.html")
+@auth.route('/sign-up')
+def signup():
+    return render_template('signup.html')
 
-@auth.route("/logout")
+
+@auth.route('/logout')
 def logout():
-    return redirect(url_for("main.home"))        
 
+    return redirect(url_for('main.index'))

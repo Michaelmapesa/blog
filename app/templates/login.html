@@ -1,16 +1,27 @@
-{% extends "base.html" %}{% block title %}Login{% endblock %}
+{% extends "base.html" %}
+
 {% block content %}
-<form action="POST">
-    <h3>
-     Login
-    </h3>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" class="form-control" placeholder="Enter email"/>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password"/>
+<div class="box">
+    <h3 class="heading-3">Login</h3>
 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
     </div>
-</form>
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="/login" class="auth">
+        <input type="email" name="email" placeholder="Email" autofocus="">
+        <input type="password" name="password" placeholder="Password">
+        <label class="checkbox">
+            <input type="checkbox" name="remember">
+            Remember me
+        </label>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+</div>
+
 {% endblock %}
