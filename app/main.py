@@ -13,7 +13,6 @@ from .models import Blog, Comment
 
 main = Blueprint('main', __name__)
 
-# helper functions to get random quotes
 
 
 def get_random_quote():
@@ -85,7 +84,7 @@ def update_blog(blog_id):
 
         return redirect(url_for('main.index'))
 
-    # Auto fill the blog details
+    
 
     return render_template('update_blog.html', blog=blog, current_user=current_user, quote=quote)
 
