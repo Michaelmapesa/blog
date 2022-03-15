@@ -29,7 +29,6 @@ def get_random_quote():
 def index():
     from sqlalchemy import desc
 
-    # sorted_blogs = Blog.query.order_by(desc(Blog.date_posted)).all()
     blogs = Blog.query.all()
 
     quote = get_random_quote()
@@ -75,7 +74,7 @@ def update_blog(blog_id):
         flash('Blog does not exist')
         return redirect(url_for('main.index'))
 
-    # if changes are made, update the blog
+    
     if request.method == 'POST':
 
         blog.title = request.form.get('title')

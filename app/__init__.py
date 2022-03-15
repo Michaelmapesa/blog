@@ -26,7 +26,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        # since the user_id is the primary key, we use it to query
+    
         return User.query.get(int(user_id))
 
     # blueprint for auth parts of the app
