@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<aside class="sidebar">
+    {% include 'sidebar.html' %}
+</aside>
+
+
+<section class="content ">
+    <div class="blog-det-container">
+
+        <div class="blog-det">
+            <h3 class="heading-2 blog-det__title">{{blog.title}} </h3>
+            <p class="blog-det__author">Author: {{blog.user.username}} </p>
+            <span class="blog-det__posted">
+                Posted: {{blog.date_posted.strftime('%b %d %I:%M%p')}}
+            </span>
+            <p class="blog-det__content">{{blog.content}}</p>
+        </div>
+
+        <div class="comment">
+            <h3 class="comment-title btn">Leave comment</h3>
+            <form action="/create-comment/{{blog.id}}" method="POST">
+                <label for="full_name">Full name</label>
+                <input required type="text" name="name" placeholder="Full name...">
+
+                <label for="comment">Add comment</label>
+                <textarea name="comment" cols="40" rows="8"
+                    placeholder="Add comment..."></textarea>
+
+                <button type="submit" class="btn">Comment</button>
+            </form>
+
+            <div class="comments-section">
+                {% for comment in blog.comments %}
+                <div class="comment-item">
+                    {% if blog.user.id == current_user.id %}
+                    <a href="{{url_for('main.delete_comment', comment_id = comment.id)}}"
+                        class="comment-item__delete ">
+                        Delete
+                    </a>
+                    {% endif %}
+
+                    <h4 class="comment-item__name">{{comment.name}}</h4>
+                    <p class="comment-item__content">{{comment.content}}</p>
+                    <span class="comment-item__posted">
+                        {{comment.date_posted.strftime('%b %d %I:%M%p')}}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+</section>
+
+<aside class="quote">
+    <p class="quote__content">{{quote.quote}}</p>
+    <span class="quote__author">~ {{quote.author}} </span>
+
+</aside>
+
+
+{% endblock %}

@@ -1,0 +1,5 @@
+virtual/
+__pycache__/
+start.sh
+.gitignore
+static/img/

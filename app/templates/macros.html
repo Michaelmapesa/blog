@@ -1,69 +1,81 @@
 {% macro displayBlogs(blogs) %}
 
-
-<div class="blogs">
+<div class="posts">
     {% for blog in blogs %}
-    <div class="blogs">
-        <h4 class="blogs__username">@{{blog.user.username}} </h4>
-        <p class="blog__text"> {{blog.text}} </p>
 
-        <a class="hashtag" href="{{url_for('main.category', category=blog.category)}} ">
-            #{{category.category}} </a>
 
-        <div class="blog__votes">
-            <form action="/upvote/{{blog.id}}" method="POST">
-                <span> {{blog.upvotes|length}} </span>
-                <button type="submit" class="btn--upvote">
-                    <img class="svg"
-                        src="{{url_for('static', filename='img/up-svgrepo-com.svg')}}">
-                </button>
-            </form>
-            <form action="/downvote/{{blog.id}}" method="POST">
-                <span>{{blog.downvotes| length}} </span>
-                <button type="submit" class="btn--upvote">
-                    <img class="svg"
-                        src="{{url_for('static', filename='img/arrow-download-svgrepo-com.svg')}}">
-                </button>
-            </form>
+    <div class="post">
+        {% if blog.user.id == current_user.id %}
+        <div class="post-update">
+            <img src="../static/img/menu-dots.svg" alt="Update" class="update-icon">
+            <span class="post-update__container">
+                <a href="{{url_for('main.update_blog', blog_id=blog.id)}}"
+                    class="post-update__item">Edit</a>
+                <a href="{{url_for('main.delete_blog', blog_id=blog.id)}}"
+                    class="post-update__item">Delete</a>
+            </span>
         </div>
+        {% endif %}
 
 
-        <button class="collapsible">{{blog.comments | length}} Comments</button>
+        <img src='../static/img/{{blog.user.profile_pic}}' )}} alt="Profile Img"
+            class="profile-img">
 
-        <div class="content">
-            <form action="/create-comment/{{blog.id}}" method="POST">
-                <input required type="text" name="text" placeholder="Add comment">
-                <button type="submit" class="btn">
-                    Add
-                </button>
+        <div class="post-info">
 
-            </form>
-            {% for comment in blog.comments %}
-            <p>{{comment.user.username}}: {{comment.text}} </p>
+            <div class="post__header">
+                <span class="post__author">@{{blog.user.username}} </span>
+                <span class="post__date">{{blog.date_posted.strftime('%b %d')}}
+                </span>
 
-            {% endfor %}
+
+            </div>
+            <a href="{{url_for('main.blog', blog_id=blog.id)}} ">
+                <h3 class="post__title">{{blog.title}} </h3>
+                <p class="post__content">
+                    {{blog.content}}
+                </p>
+            </a>
+
+
+            <div class="post__footer">
+                <a href="{{ url_for('main.category', category=blog.category) }} "
+                    class="post__category">#{{blog.category}} </a>
+                <p class="post__comments">{{blog.comments | length}} Comments</p>
+            </div>
+
+
         </div>
-
 
     </div>
+
     {% endfor %}
 
     <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
+        const dotIcons = document.querySelectorAll('.update-icon');
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
+        dotIcons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                // Remove the active class from all icons
+                document.querySelectorAll('.post-update__container').forEach(container => {
+                    container.classList.remove('hidden');
+                });
+
+                e.preventDefault();
+                const postUpdate = e.target.parentElement;
+                const postUpdateContainer = postUpdate.querySelector('.post-update__container');
+                postUpdateContainer.classList.add('hidden');
             });
-        }
+        });
+
+
+
+
+
+
+
     </script>
+
 
 </div>
 
