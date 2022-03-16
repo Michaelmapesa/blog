@@ -54,7 +54,7 @@ def signup():
             return redirect(url_for('auth.signup'))
 
         user = User(email=email, username=username,
-                    password=generate_password_hash(password, method='Xyz432'))
+                    password=generate_password_hash(password, method='sha256'))
 
         db.session.add(user)
         db.session.commit()
