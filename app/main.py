@@ -164,13 +164,13 @@ def allowed_file(filename):
 @login_required
 def upload_profile_pic():
     if request.method == 'POST':
-        # check if the post request has the file part
+        
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
+        
+        
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
@@ -178,7 +178,7 @@ def upload_profile_pic():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            # update the profile picture
+            
             current_user.profile_pic = filename
             db.session.commit()
 

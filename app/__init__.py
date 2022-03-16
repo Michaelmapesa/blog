@@ -10,7 +10,7 @@ UPLOAD_FOLDER = 'app/static/img'
 
 
 app = Flask(__name__)
-app.config.from_object(config_options['development'])
+app.config.from_object(config_options["production"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -29,11 +29,11 @@ def create_app():
     
         return User.query.get(int(user_id))
 
-    # blueprint for auth parts of the app
+    
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    # blueprint for non-auth parts of the app
+    
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
