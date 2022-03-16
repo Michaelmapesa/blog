@@ -10,13 +10,13 @@ UPLOAD_FOLDER = 'app/static/img'
 
 
 app = Flask(__name__)
-app.config.from_object(config_options["production"])
+app.config.from_object(config_options["development"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from .models import User
+from .models import User,Blog
 
 
 def create_app():

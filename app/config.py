@@ -1,3 +1,4 @@
+from distutils.debug import DEBUG
 import os
 
 
@@ -12,7 +13,8 @@ class DevConfig(Config):
 
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh'
+    SQLALCHEMY_DATABASE_URI =  os.environ.get('postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh')
+    DEBUG = False
 
 
 config_options = {
