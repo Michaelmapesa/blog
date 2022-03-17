@@ -1,3 +1,4 @@
+
 import urllib
 import json
 import os
@@ -13,6 +14,7 @@ from .models import Blog, Comment
 
 main = Blueprint('main', __name__)
 
+# helper functions to get random quotes
 
 
 def get_random_quote():
@@ -28,6 +30,7 @@ def get_random_quote():
 def index():
     from sqlalchemy import desc
 
+    # sorted_blogs = Blog.query.order_by(desc(Blog.date_posted)).all()
     blogs = Blog.query.all()
 
     quote = get_random_quote()
@@ -73,7 +76,7 @@ def update_blog(blog_id):
         flash('Blog does not exist')
         return redirect(url_for('main.index'))
 
-    
+    # if changes are made, update the blog
     if request.method == 'POST':
 
         blog.title = request.form.get('title')
@@ -84,7 +87,7 @@ def update_blog(blog_id):
 
         return redirect(url_for('main.index'))
 
-    
+    # Auto fill the blog details
 
     return render_template('update_blog.html', blog=blog, current_user=current_user, quote=quote)
 
@@ -156,21 +159,21 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif', 'svg'}
 
 
 def allowed_file(filename):
-       return '.' in filename and \
-          filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @main.route('/upload_profile_pic', methods=['GET', 'POST'])
 @login_required
 def upload_profile_pic():
     if request.method == 'POST':
-        
+        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        
-        
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
@@ -178,7 +181,7 @@ def upload_profile_pic():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            
+            # update the profile picture
             current_user.profile_pic = filename
             db.session.commit()
 
@@ -192,3 +195,11 @@ def category(category):
     quote = get_random_quote()
     blogs = Blog.query.filter_by(category=category).all()
     return render_template('category.html', blogs=blogs, category=category, quote=quote)
+
+
+# def sidebar():
+#     categories = Blog.category.query.all()
+#     print('*********************************************************')
+#     print(categories)
+
+#     return render_template('sidebar.html', categories=categories)
