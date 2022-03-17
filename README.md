@@ -14,7 +14,7 @@ Linked-Michael Mapesa.
 
 ## Description
 
- This is an application that allow the user to create blog, and comment on blog.
+ This is an application that allow the user to create blog, and comment,update or delete blog.
 
 ## Installation process
 
