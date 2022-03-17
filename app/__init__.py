@@ -11,11 +11,9 @@ UPLOAD_FOLDER = 'app/static/img'
 
 
 app = Flask(__name__)
-app.config.from_object(config_options["production"])
+app.config.from_object(config_options["development"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

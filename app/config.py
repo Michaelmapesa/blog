@@ -9,12 +9,12 @@ class Config:
 
 
 class DevConfig(Config):
-    DEBUG = False
+    DEBUG = True
 
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI =  os.environ.get('postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh')
-    DEBUG = True
+    SQLALCHEMY_DATABASE_URI =  'postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh'
+    
 
 
 config_options = {
