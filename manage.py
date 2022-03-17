@@ -15,7 +15,7 @@ from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager, Server
 from app.models import User, Blog, Comment 
 
-app = create_app()
+app = create_app('production')
 manager=Manager(app)
 migrate = Migrate(app, db)
 

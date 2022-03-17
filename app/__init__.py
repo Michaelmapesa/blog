@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+import os
 
 
 from .config import config_options
@@ -10,8 +11,11 @@ UPLOAD_FOLDER = 'app/static/img'
 
 
 app = Flask(__name__)
-app.config.from_object(config_options["development"])
+app.config.from_object(config_options["production"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('postgresql+psycopg2://moringaaccess:bloghhh@localhost/bloghhh')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
